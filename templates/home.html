@@ -1,0 +1,32 @@
+<!-- para indicar en que template se va a mostrar estos bloques de contenidos-->
+{% extends "base.html" %}
+
+<!-- cada uno de estos bloques fue definido en el template base -->
+{% block title %}
+	Home
+{% endblock %}
+
+{% block content %}
+	<h2>{{ titulo }}</h2>
+
+	<!-- validar que cuando ya se haya enviado el formulario se quite el boton de registrar -->
+	{% if form %}
+		<form action="" method="POST" enctype="multipart/form-data">
+			{% csrf_token %} <!-- csrf_token es una capa de seguridad de djago que sirve para evitar la inyeccion de datos malicios a la base de datos por lo que es obligatorio colocarlo cuando se usa el motodo post -->
+			{{ form.as_p }} <!-- as_p "como parrafo" para colocarle el salto de linia al formulario -->
+			<input type="submit" value="Registrarse">
+		</form>
+	{% endif %}
+
+	<!-- ciclo para recorrer todos los registrados -->
+	<br>
+	<h2>Registrados</h2>
+	{% for r in registrados %}
+		<ul>
+			<li>{{ r.email }}</li>
+		</ul>
+	{% endfor%}
+
+
+{% endblock %}
+
